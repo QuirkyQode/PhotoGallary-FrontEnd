@@ -12,6 +12,7 @@ function RandomImages() {
       .then((data) => {
         console.log("data", data.data[0].urls.small)
         setRandomImages(data.data)
+        console.log(data.data)
       })
       .catch((error) => console.log(error));    
     // console.log("response", response)
@@ -28,7 +29,14 @@ function RandomImages() {
     <div>
       <h1>Random Images</h1>
       {randomImages.map((image, index) => (
-        <img key={index} src={image.urls.small} alt={`Random Image ${index}`} />
+        <div>
+          <img key={index} src={image.urls.small} alt={`Random Image ${index}`} />
+          <p>Description : {image.description}</p>
+          <p>{image.alt_description}</p>
+          <p>Photo ID : {image.id} </p>
+          <p>User Name: {image.user.username}</p>
+          <p>User Id: {image.user.id}</p>
+        </div>
       ))}
     </div>
   );
