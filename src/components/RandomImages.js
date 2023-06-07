@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../../node_modules/bootstrap/dist/css/bootstrap.css"
+
+import {
+  Carousel,
+  CarouselItem,
+  CarouselControl,
+  CarouselIndicators,
+  CarouselCaption,
+} from 'reactstrap';
 
 function RandomImages() {
   const [randomImages, setRandomImages] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
   const fetchImages = async () => {
     
@@ -25,10 +36,44 @@ function RandomImages() {
     // console.log("randomImages", randomImages)
   }, []);
 
+
+  const next = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === randomImages.length - 1 ? 0 : activeIndex + 1;
+    setActiveIndex(nextIndex);
+  };
+
+  const previous = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === 0 ? randomImages.length - 1 : activeIndex - 1;
+    setActiveIndex(nextIndex);
+  };
+
+  const goToIndex = (newIndex) => {
+    if (animating) return;
+    setActiveIndex(newIndex);
+  };
+
+  const slides = randomImages.map((image, index) => {
+    return (
+      <CarouselItem
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+        key={index}
+      >
+        <img className="d-block rounded vh-100" src={image.urls.small} alt={image.alt_description} />
+        <CarouselCaption
+          captionText={image.alt_description}
+          captionHeader={image.description}
+        />
+      </CarouselItem>
+    );
+  });
+
   return (
-    <div>
+    <div className="container d-flex flex-column justify-content-center align-items-center">
       <h1>Random Images</h1>
-      {randomImages.map((image, index) => (
+      {/* {randomImages.map((image, index) => (
         <div>
           <img key={index} src={image.urls.small} alt={`Random Image ${index}`} />
           <p>Description : {image.description}</p>
@@ -37,7 +82,32 @@ function RandomImages() {
           <p>User Name: {image.user.username}</p>
           <p>User Id: {image.user.id}</p>
         </div>
-      ))}
+      ))} */}
+
+<Carousel
+      activeIndex={activeIndex}
+      next={next}
+      previous={previous}
+      // {...args}
+    >
+      <CarouselIndicators
+        items={randomImages}
+        activeIndex={activeIndex}
+        onClickHandler={goToIndex}
+      />
+      {slides}
+      <CarouselControl
+        direction="prev"
+        directionText="Previous"
+        onClickHandler={previous}
+      />
+      <CarouselControl
+        direction="next"
+        directionText="Next"
+        onClickHandler={next}
+      />
+    </Carousel>
+
     </div>
   );
 }
