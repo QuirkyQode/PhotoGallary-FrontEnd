@@ -89,7 +89,8 @@ function RandomImages() {
         onExited={() => setAnimating(false)}
         key={index}
       >
-        {hover && <div className="text-center position-absolute top-10 text-white bg-secondary bg-gradient">
+        {hover && <div className="text-center position-absolute top-10 text-white bg-secondary bg-gradient 
+         bg-opacity-25">
         <p>Description: {image.description} </p>
         <p>{image.alt_description }</p>
         <p>Photo ID : {image.id} </p>
@@ -137,11 +138,15 @@ function RandomImages() {
       />
       {slides}
       <CarouselControl
+        className="bg-secondary bg-gradient 
+        bg-opacity-10"
         direction="prev"
         directionText="Previous"
         onClickHandler={previous}
       />
       <CarouselControl
+      className="bg-secondary bg-gradient 
+      bg-opacity-10"
         direction="next"
         directionText="Next"
         onClickHandler={next}
