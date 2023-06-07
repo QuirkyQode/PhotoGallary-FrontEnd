@@ -54,6 +54,34 @@ function RandomImages() {
     setActiveIndex(newIndex);
   };
 
+  const imageInfo = (image) => {
+    console.log(image)
+    return(
+      <div className="text-center">
+        <p>Description: {image.description} </p>
+        <p>{image.alt_description }</p>
+        <p>Photo ID : {image.id} </p>
+        <p>User Name: {image.user.username}</p>
+        <p>User Id: {image.user.id}</p>
+        
+      </div>
+    )
+  }
+  const [hover, setHover] = useState(false); // initial false
+
+  const HoverData = "Click or pinch to Zoom Image";
+
+  const onHover = (e) => {
+    e.preventDefault();
+    setHover(true); // turn true
+    console.log("hovered");
+  };
+
+  const offHover = (e) => {
+    e.preventDefault(); // turn false
+    setHover(false);
+  };
+
   const slides = randomImages.map((image, index) => {
     return (
       <CarouselItem
@@ -61,11 +89,23 @@ function RandomImages() {
         onExited={() => setAnimating(false)}
         key={index}
       >
-        <img className="d-block rounded vh-100" src={image.urls.small} alt={image.alt_description} />
+        {hover && <div className="text-center position-absolute top-10 text-white bg-secondary bg-gradient">
+        <p>Description: {image.description} </p>
+        <p>{image.alt_description }</p>
+        <p>Photo ID : {image.id} </p>
+        <p>User Name: {image.user.username}</p>
+        <p>User Id: {image.user.id}</p>
+      </div>}
+        <img onMouseEnter={(e) => onHover(e)}
+        onMouseLeave={(e) => offHover(e)}
+        className="d-block rounded vh-100" src={image.urls.small} alt={image.alt_description} />
         <CarouselCaption
-          captionText={image.alt_description}
-          captionHeader={image.description}
-        />
+          captionText=""
+          captionHeader="hover for Info"
+        >
+
+
+        </CarouselCaption>
       </CarouselItem>
     );
   });
