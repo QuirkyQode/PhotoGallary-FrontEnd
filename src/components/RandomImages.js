@@ -9,6 +9,7 @@ import {
   CarouselIndicators,
   CarouselCaption,
 } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 function RandomImages() {
   const [randomImages, setRandomImages] = useState([]);
@@ -54,22 +55,7 @@ function RandomImages() {
     setActiveIndex(newIndex);
   };
 
-  const imageInfo = (image) => {
-    console.log(image)
-    return(
-      <div className="text-center">
-        <p>Description: {image.description} </p>
-        <p>{image.alt_description }</p>
-        <p>Photo ID : {image.id} </p>
-        <p>User Name: {image.user.username}</p>
-        <p>User Id: {image.user.id}</p>
-        
-      </div>
-    )
-  }
   const [hover, setHover] = useState(false); // initial false
-
-  const HoverData = "Click or pinch to Zoom Image";
 
   const onHover = (e) => {
     e.preventDefault();
@@ -99,13 +85,11 @@ function RandomImages() {
       </div>}
         <img onMouseEnter={(e) => onHover(e)}
         onMouseLeave={(e) => offHover(e)}
-        className="d-block rounded vh-100" src={image.urls.small} alt={image.alt_description} />
+        className="d-block rounded vh-60" src={image.urls.regular} alt={image.alt_description} />
         <CarouselCaption
           captionText=""
           captionHeader="hover for Info"
         >
-
-
         </CarouselCaption>
       </CarouselItem>
     );
@@ -113,7 +97,10 @@ function RandomImages() {
 
   return (
     <div className="container d-flex flex-column justify-content-center align-items-center">
-      <h1>Random Images</h1>
+      <div className="d-flex w-100 m-3">
+        <h1>Random Images</h1>
+        <Link to="/" className="ms-auto">Home</Link>
+      </div>
       {/* {randomImages.map((image, index) => (
         <div>
           <img key={index} src={image.urls.small} alt={`Random Image ${index}`} />

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function SingleImage() {
   const [imageId, setImageId] = useState("");
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState(null);
 
   const handleImageIdChange = (event) => {
     setImageId(event.target.value);
@@ -26,15 +27,19 @@ function SingleImage() {
   };
 
   return (
-    <div>
-      <h1> Image with ID</h1>
+    <div  className="container d-flex flex-column justify-content-center align-items-center">
+      <div className="d-flex w-100 m-3">
+          <h1> Image with ID</h1>
+          <Link to="/" className="ms-auto">Home</Link>
+      </div>
       <input
         type="text"
         value={imageId}
         onChange={handleImageIdChange}
         placeholder="Enter Image Id"
+        className="m-2"
       />
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleSearch} className="m-3">Search</button>
 
     
     { image &&    (<div>
